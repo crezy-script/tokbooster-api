@@ -38,3 +38,11 @@ def check_payment():
 if __name__ == "__main__":
     app.run(debug=True)
 
+@app.route("/register_payment")
+def register_payment():
+    email = request.args.get("email")
+    if not email:
+        return jsonify({"success": False, "error": "Email manquant"})
+
+    users_paid[email] = {"paid": True, "permanent_unlock": False}
+    return jsonify({"success": True, "message": f"Paiement enregistré pour {email}"})
