@@ -22,7 +22,8 @@ def check_payment():
 
 if __name__ == "__main__":
     app.run(debug=True)
-from flask import Flask, request, jsonify
+    
+from flask import Flask, request, jsonify # type: ignore
 
 app = Flask(__name__)
 
