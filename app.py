@@ -2,11 +2,26 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
+# Simule une base de données de clés valides
+clefs_valides = {"ABC123", "XYZ789", "UNLOCKME"}
+
 # Liste fictive des utilisateurs ayant payé
 users_paid = {
     "user1@example.com": {"paid": True, "permanent_unlock": False},
     "user2@example.com": {"paid": False, "permanent_unlock": False}
 }
+
+@app.route("/")
+def index():
+    return "API TokBooster en ligne !"
+
+@app.route("/unlock")
+def unlock():
+    key = request.args.get("key")
+    if key in clefs_valides:
+        return jsonify({"success": True})
+    else:
+        return jsonify({"success": False})
 
 @app.route('/check_payment', methods=['POST'])
 def check_payment():
@@ -22,22 +37,4 @@ def check_payment():
 
 if __name__ == "__main__":
     app.run(debug=True)
-    
-from flask import Flask, request, jsonify # type: ignore
 
-app = Flask(__name__)
-
-# Simule une base de données de clés valides
-clefs_valides = {"ABC123", "XYZ789", "UNLOCKME"}
-
-@app.route("/")
-def index():
-    return "API TokBooster en ligne !"
-
-@app.route("/unlock")
-def unlock():
-    key = request.args.get("key")
-    if key in clefs_valides:
-        return jsonify({"success": True})
-    else:
-        return jsonify({"success": False})
